@@ -1,3 +1,5 @@
+[![An image of @bigoudops's Holopin badges, which is a link to view their full Holopin profile](https://holopin.me/bigoudops)](https://holopin.io/@bigoudops)
+
 # template4JoplinTemplates
 
 Ce dépôt contient un ensemble de modèles destinés au plugin [Joplin Templates](https://github.com/joplin/plugin-templates). Ces modèles permettent de standardiser et d'accélérer la prise de notes dans Joplin.
