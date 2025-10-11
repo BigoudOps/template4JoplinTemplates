@@ -1,4 +1,5 @@
 name: Release per language
+
 on:
   push:
     tags:
@@ -10,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,28 +21,32 @@ jobs:
       - name: Detect language and version
         id: meta
         run: |
-          TAG="${GITHUB_REF_NAME}"
+          TAG="${GITHUB_REF_NAME}"   # ex: v1.2.3-fr
           if [[ "$TAG" =~ -fr$ ]]; then
             echo "lang=fr" >> $GITHUB_OUTPUT
-            echo "flag=🇫🇷" >> $GITHUB_OUTPUT
             echo "dir=templates-FR" >> $GITHUB_OUTPUT
+            echo "flag=🇫🇷" >> $GITHUB_OUTPUT
           elif [[ "$TAG" =~ -en$ ]]; then
             echo "lang=en" >> $GITHUB_OUTPUT
-            echo "flag=🇬🇧" >> $GITHUB_OUTPUT
             echo "dir=templates-EN" >> $GITHUB_OUTPUT
+            echo "flag=🇬🇧" >> $GITHUB_OUTPUT
           else
             echo "Unsupported tag suffix"; exit 1
           fi
           BASE="${TAG%-fr}"; BASE="${BASE%-en}"
           echo "base_ver=$BASE" >> $GITHUB_OUTPUT
 
-      - name: Build ZIP
+      - name: Build artifact (zip)
         run: |
           ZIP="template4JoplinTemplates-${{ steps.meta.outputs.base_ver }}-${{ steps.meta.outputs.lang }}.zip"
           zip -r "$ZIP" "${{ steps.meta.outputs.dir }}" README.md LICENSE
           echo "ZIP=$ZIP" >> $GITHUB_ENV
 
-      - name: Create or Update Release
+      - name: Generate checksum
+        run: |
+          shasum -a 256 "${ZIP}" > "${ZIP}.sha256"
+
+      - name: Create/Update Release with assets
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
@@ -48,3 +54,36 @@ jobs:
           generate_release_notes: true
           files: |
             ${{ env.ZIP }}
+            ${{ env.ZIP }}.sha256
+
+      - name: Update README badge
+        env:
+          TAG: ${{ github.ref_name }}
+          LANG: ${{ steps.meta.outputs.lang }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          set -euo pipefail
+
+          # On bascule sur la branche par défaut pour éditer README.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "${DEFAULT_BRANCH}"
+          git checkout "${DEFAULT_BRANCH}"
+          git pull --ff-only
+
+          # Sélectionne le motif à remplacer selon la langue
+          if [ "${LANG}" = "fr" ]; then
+            # Remplace .../releases/tag/vX.Y.Z-fr par .../releases/tag/${TAG}
+            sed -i -E "s|(releases/tag/)v[0-9]+\.[0-9]+\.[0-9]+-fr|\1${TAG}|g" README.md
+          else
+            sed -i -E "s|(releases/tag/)v[0-9]+\.[0-9]+\.[0-9]+-en|\1${TAG}|g" README.md
+          fi
+
+          if git diff --quiet -- README.md; then
+            echo "README inchangé (badge déjà à jour)."
+            exit 0
+          fi
+
+          git add README.md
+          git commit -m "docs(readme): update ${LANG^^} badge to ${TAG} [skip ci]"
+          git push origin "${DEFAULT_BRANCH}"
