@@ -1,5 +1,8 @@
 # template4JoplinTemplates
 
+![Alt](https://repobeats.axiom.co/api/embed/ab2f41591312767877244507e7e4be00d1984f24.svg "Repobeats analytics image")
+
+
 Ce dépôt contient un ensemble de modèles destinés au plugin [Joplin Templates](https://github.com/joplin/plugin-templates). Ces modèles permettent de standardiser et d'accélérer la prise de notes dans Joplin.
 
 This repository contains a set of templates designed for the [Joplin Templates](https://github.com/joplin/plugin-templates) plugin. These templates help standardize and speed up note-taking in Joplin.
