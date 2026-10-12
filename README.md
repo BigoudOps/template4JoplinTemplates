@@ -1,7 +1,7 @@
 [![An image of @bigoudops's Holopin badges, which is a link to view their full Holopin profile](https://holopin.me/bigoudops)](https://holopin.io/@bigoudops)
 
 [![FR Release](https://img.shields.io/badge/release-FR-blue)](https://github.com/BigoudOps/template4JoplinTemplates/releases/tag/v1.0.0-fr)
-[![EN Release](https://img.shields.io/badge/release-EN-blue)](https://github.com/BigoudOps/template4JoplinTemplates/releases/tag/v1.0.1-en)
+[![EN Release](https://img.shields.io/badge/release-EN-blue)](https://github.com/BigoudOps/template4JoplinTemplates/releases/tag/v2.0.0-en)
 
 # template4JoplinTemplates
 
