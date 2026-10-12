@@ -49,15 +49,15 @@ The English templates are available in the `templates-EN` folder.
 - **Description:** A template to capture key points from a conference or event.
 
 ### 2. Meeting
-- **File:** `Meeting-{{reunion}}.md`
+- **File:** `Meeting-{{meeting}}.md`
 - **Description:** A template to structure meeting notes, including participants, topics discussed, and action items.
 
 ### 3. Learning Log
-- **File:** `Learning Log - {{sujet}}.md`
+- **File:** `Learning Log - {{topic}}.md`
 - **Description:** A template to track progress in learning a specific topic.
 
 ### 4. Ticket
-- **File:** `Ticket - {{client}} - {{titre}}.md`
+- **File:** `Ticket - {{customer}} - {{title}}.md`
 - **Description:** A template to document tickets or tasks related to a client or project.
 
 ### 5. Podcast

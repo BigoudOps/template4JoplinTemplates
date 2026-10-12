@@ -1,18 +1,18 @@
 ---
-reunion: text
+meeting: text
 present: text
-lieu: text
+location: text
 show_version:
   label: Add a “Version” section?
   type: boolean
 template_tags: meeting, en
 ---
 
-# {{reunion}}
+# {{meeting}}
 
 ## Meeting Details
 - Date & Time: {{#custom_datetime}}[]YYYY[-]MM[-]DD[ ]HH[:]mm[]{{/custom_datetime}}
-- Location: {{lieu}}
+- Location: {{location}}
 - Agenda:
 
 ## Participants

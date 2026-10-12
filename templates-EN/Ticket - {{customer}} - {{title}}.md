@@ -8,10 +8,10 @@ url:
 ticket_number:
   label: Ticket number
   type: text
-client_name:
+customer_name:
   label: Customer name
   type: text
-client:
+customer:
   label: Select a customer
   type: dropdown(Customer1, Customer2, Customer3)
 show_version:
@@ -26,9 +26,9 @@ template_tags: ticket
 
 Ticket #: {{ticket_number}} :ticket:
 
-Customer: {{client}}
+Customer: {{customer}}
 
-Customer name :card_index:: {{client_name}}
+Customer name :card_index:: {{customer_name}}
 
 {{#if show_version}}
 # Version
